@@ -1,0 +1,56 @@
+DROP DATABASE IF EXISTS legos;
+CREATE DATABASE legos;
+
+USE legos;
+
+CREATE USER IF NOT EXISTS 'test'@localhost IDENTIFIED BY 'test';
+GRANT ALL PRIVILEGES ON legos.* TO 'test'@localhost;
+
+DROP TABLE IF EXISTS images;
+CREATE TABLE images (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	url VARCHAR(255) NOT NULL,
+	review_id INT NOT NULL
+);
+
+DROP TABLE IF EXISTS experiences;
+CREATE TABLE experiences (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	play_experience INT(5) NOT NULL,
+	difficulty INT(5) NOT NULL,
+	value INT(5) NOT NULL,
+	build_time INT DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS products;
+CREATE TABLE products (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(50)
+);
+
+DROP TABLE IF EXISTS reviews;
+CREATE TABLE reviews (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	rating INT NOT NULL,
+	created_at Date NOT NULL,
+	recommended BIT DEFAULT 0,
+	subject VARCHAR(50) NOT NULL,
+	description VARCHAR(1550) DEFAULT '',
+	is_helpful INT DEFAULT 0,
+	is_not_helpful INT DEFAULT 0,
+	product_id INT NOT NULL,
+	experience_id INT NOT NULL,
+	user_id INT NOT NULL
+);
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	age INT DEFAULT NULL
+);
+
+ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products(id);
+ALTER TABLE reviews ADD FOREIGN KEY (experience_id) REFERENCES experiences(id);
+ALTER TABLE reviews ADD FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE images ADD FOREIGN KEY (review_id) REFERENCES reviews(id);

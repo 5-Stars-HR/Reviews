@@ -1,0 +1,52 @@
+version: '2.1'
+services:
+    mysql:
+        image: mysql:5.7.29
+        environment:
+            MYSQL_DATABASE: ${DB}
+            MYSQL_USER: ${DB_USER} 
+            MYSQL_PASSWORD: ${DB_PASS}
+            MYSQL_ROOT_USER: ${DB_USER}
+            MYSQL_ROOT_PASSWORD: ${DB_PASS}
+            restart: 'always'
+        container_name: lego_mysql
+        networks:
+        - backend
+        volumes:
+            - ./db/lego_schema.sql:/docker-entrypoint-initdb.d/lego_schema.sql
+
+    web:
+        image: stakashima21/reviews:latest
+        build: .
+        environment:
+            HOST: ${HOST} 
+            DB_USER: ${DB_USER} 
+            DB_PASS: ${DB_PASS}
+            DB: ${DB}
+        container_name: lego_reviews
+        networks:
+        - frontend
+        - backend
+        ports:
+        - "8080:8080"
+        volumes:
+             - ${PWD}/:/src/reviews
+        depends_on:
+        - mysql
+    proxy:
+        image: stakashima21/reviews-proxy:latest
+        environment:
+            REVIEWS_URL: ${REVIEWS_URL}
+            GALLERY_URL: ${GALLERY_URL}
+            PRODUCTS_URL: ${PRODUCTS_URL}
+        build: ../ShojiProxyServer/
+        container_name: lego_proxy 
+        networks:
+        - frontend
+        ports:
+        - "8000:8000"
+        depends_on:
+        - web
+networks:
+    frontend:
+    backend:
