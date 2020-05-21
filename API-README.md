@@ -66,7 +66,7 @@
 </br>
 
 ### Update helpful and not-helpful count
-  * PUT `/api/products/:product_id/reviews/:review_id`
+  * PATCH `/api/products/:product_id/reviews/:review_id`
 
 **Path Parameters:**
   * `product_id` : product id
