@@ -44,8 +44,8 @@
 ---
 </br>
 
-### Get A product's review by review ID
-  * GET `/api/products/:product_id/reviews/:review_id`
+### Get A review votes count by review ID
+  * GET `/api/products/:product_id/reviews/:review_id/votes`
 
 **Path Parameters:**
   * `product_id` : product id
@@ -58,16 +58,8 @@
 ```json
     {
       "id": "Number",
-      "rating": "Number",
-      "createdAt": "Date",
-      "recommended": "Boolean",
-      "subject": "Text",
-      "description": "Text",
-      "isHelpful": "Number",
-      "isNotHelpful": "Number",
-      "productId": "Number",
-      "experience_id": "Number",
-      "user_id": "Number",
+      "is_helpful": "Number",
+      "is_not_helpful": "Number",
     }
 ```
 ---

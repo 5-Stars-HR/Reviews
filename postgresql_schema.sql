@@ -24,7 +24,7 @@
     rating SMALLINT NOT NULL,
     recommended BOOLEAN NOT NULL,
     is_helpful INT NOT NULL,
-    is_noot
+    is_not_helpful INT NOT NULL,
     play_experience SMALLINT NOT NULL,
     difficulty SMALLINT NOT NULL,
     value_for_money SMALLINT NOT NULL,
