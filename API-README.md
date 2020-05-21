@@ -105,11 +105,7 @@
 <br/>
 
 ### Add a review to a product
-  * POST `/api/restaurants/:restaurantId/images`
-
-**Path Parameters:**
-
-  * `restaurantId` restaurant id
+  * POST `/api/products/reviews/`
 
 **Success Status Code:** `201`
 
@@ -117,13 +113,15 @@
 
 ```json
     {
-      "user": "String",
-      "image": "image URL",
-      "description": "String",
-      "posted": "YYYY-MM-MM",
-      "googleMap": "String location",
-      "category": "String",
-      "restaurant": "id Number",
-      "cost": "Number"
+      "productId": "Number",
+      "userId": "Number",
+      "rating": "Number",
+      "recommended": "Boolean",
+      "subject": "Text",
+      "description": "Text",
+      "playExperience": "Number",
+      "difficulty": "Number",
+      "value": "Number",
+      "buildTime": "Number",
     }
 ```

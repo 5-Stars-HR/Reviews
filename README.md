@@ -27,7 +27,7 @@ May have to modify reset-db to point to the right host
 
 An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
-- Node 
+- Node
 
 - direnv
 - .envrc (should contain dotenv)
