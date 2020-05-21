@@ -59,13 +59,13 @@
     {
       "id": "Number",
       "rating": "Number",
-      "created_at": "Date",
+      "createdAt": "Date",
       "recommended": "Boolean",
       "subject": "Text",
       "description": "Text",
-      "is_helpful": "Number",
-      "is_not_helpful": "Number",
-      "product_id": "Number",
+      "isHelpful": "Number",
+      "isNotHelpful": "Number",
+      "productId": "Number",
       "experience_id": "Number",
       "user_id": "Number",
     }
