@@ -78,8 +78,8 @@
 
 ```json
     {
-      "feeback": "is_not_helpful" || "is_helpful",
-      "action": "+" || "-",
+      "feeback": "string",
+      "action": "string",
     }
 ```
 ---

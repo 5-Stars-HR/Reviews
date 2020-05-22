@@ -1,25 +1,24 @@
 
-// let users = mongoose.Schema({
-//   first_name: String,
-//   last_name: String,
-//   username: {
-//     type: String,
-//     unique: true,
-//   },
-// });
-
-let products = mongoose.Schema({
-  _id: Number,
-  product_name: String,
+const userSchema = mongoose.Schema({
+  first_name: String,
+  last_name: String,
+  username: { type: String, unique: true },
+  reviews: [{type: Schema.Types.ObjectId, ref: 'Reviews'}]
 });
 
-let reviews = mongoose.Schema({
-  _id: Number,
-  product_id: Number,
-  user: {
-    first_name: { type: String },
-    last_name: { type: String },
-    username: { type: String },
+const productSchema = mongoose.Schema({
+  product_name: String,
+  reviews: [{type: Schema.Types.ObjectId, ref: 'Reviews'}]
+});
+
+const reviewSchema = mongoose.Schema({
+  product_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Products'
+  },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users'
   },
   created_at: Date,
   comment: String,
@@ -33,3 +32,6 @@ let reviews = mongoose.Schema({
   build_time: Number,
 })
 
+const Users= mongoose.model('Users', userSchema);
+const Products = mongoose.model('Products', productSchema);
+const Reviews = mongoose.model('Reviews', reviewSchema);

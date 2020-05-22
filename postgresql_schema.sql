@@ -4,21 +4,21 @@
   \c reviews;
 
   CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    user_id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     username VARCHAR(30) UNIQUE NOT NULL,
   );
 
   CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
+    product_id SERIAL PRIMARY KEY,
     product_name TEXT NOT NULL
   );
 
   CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
-    product_id INT NOT NULL,
+    user_id INT NOT NULL REFERENCES users(user_id),
+    product_id INT NOT NULL REFERENCES products(product_id),
     created_at DATE NOT NULL,
     comment TEXT NOT NULL,
     rating SMALLINT NOT NULL,
