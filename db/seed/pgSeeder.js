@@ -97,5 +97,5 @@ const seedReviews = (productQuantity) => {
 }
 
 seedUsers();
-seedProducts(3000000);
-seedReviews(3000000);
+seedProducts(10000000);
+seedReviews(10000000);
