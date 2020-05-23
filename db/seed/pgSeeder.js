@@ -73,29 +73,20 @@ const seedReviews = (productQuantity) => {
     }
     (reviewIndex === 19) ? reviewIndex = 0 : reviewIndex += 1;
 
-    if ((i+1) % 300000 === 0) {
-      // if (fileIndex === 0 ) {
-        fs.writeFile(`${filePath}${fileIndex}.txt`, fileContent, (err) => {
-          if (err) {
-            console.log('error while writing pgData' , err)
-          } else {
-            console.log(`the Reviews file is successfully created`);
-          }
-        })
-        fileIndex += 1;
-        fileContent = null;
-    //   } else {
-    //     fs.appendFile(filePath, fileContent, (err) => {
-    //       if (err) {
-    //         console.log('error while writing pgData' , err)
-    //       } else {
-    //         console.log('the Reviews file is successfully updated');
-    //       }
-    //     });
-    //     fileContent = '';
-    //   }
+    if ((i+1) % 400000 === 0) {
+      let writeStream = fs.createWriteStream(`${filePath}${fileIndex}.txt`);
+      writeStream.write(fileContent, (err) => {
+        if (err) {
+          console.log('error while writing pgData' , err)
+        } else {
+          console.log(`the Reviews file is successfully created`);
+        }
+      })
+      fileIndex += 1;
+      fileContent = '';
     }
   }
+  let writeStream = fs.createWriteStream(`${filePath}${fileIndex}.txt`);
   fs.writeFile(`${filePath}${fileIndex}.txt`, fileContent, (err) => {
     if (err) {
       console.log('error while writing pgData' , err)
@@ -106,5 +97,5 @@ const seedReviews = (productQuantity) => {
 }
 
 seedUsers();
-seedProducts(2000000);
-seedReviews(2000000);
+seedProducts(3000000);
+seedReviews(3000000);

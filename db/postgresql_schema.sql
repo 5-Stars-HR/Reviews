@@ -36,7 +36,14 @@
 
 COPY users(first_name, last_name, username, age) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgUsers.txt' WITH DELIMITER ',';
 COPY products(product_name) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgProducts.txt';
-COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews1.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews2.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews3.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews4.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews5.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews6.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews7.txt' WITH DELIMITER ',';
+COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/data/pgReviews8.txt' WITH DELIMITER ',';
 
 ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products(product_id);
 ALTER TABLE reviews ADD FOREIGN KEY (user_id) REFERENCES users(user_id);
