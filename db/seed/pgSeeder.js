@@ -3,55 +3,108 @@ const fs = require('fs');
 const path = require('path');
 
 
-let fileContent = ' \\c reviews \n';
-
 const seedUsers = () => {
+  let fileContent = ''
+  const randomAge = [5, 10, 30, 40, 13, 15, 34, 32, 21 , 5, 9, 12, 22, 14, 17, 19, 30, 20, 22, 23];
+  let index = 0;
   for (let i = 1; i <= 100; i += 1) {
     const firstName = faker.name.firstName().replace(/'/, ' ');
     const lastName = faker.name.lastName().replace(/'/, ' ');
     const username = faker.internet.userName();
-    fileContent += `INSERT INTO users (first_name, last_name, username) values ('${firstName}', '${lastName}', '${username}'); \n`;
+    fileContent += `'${firstName}', '${lastName}', '${username}', ${randomAge[index]}\n`;
+    (index === 19) ? index = 0 : index += 1;
   }
+  fs.writeFile(path.join(__dirname, '../data/pgUsers.txt'), fileContent, (err) => {
+    if (err) {
+      console.log('error while writing pgData' , err)
+    } else {
+      console.log('the Users file is successfully created');
+    }
+  });
 };
 
 const seedProducts = (quantity) =>  {
+  let fileContent = '';
   for (let i = 1; i <= quantity; i += 1) {
     const productName = faker.commerce.productName();
-    fileContent += `INSERT INTO products (product_name) values ('${productName}'); \n`;
+    fileContent += `'${productName}'\n`;
   }
+  fs.writeFile(path.join(__dirname, '../data/pgProducts.txt'), fileContent, (err) => {
+    if (err) {
+      console.log('error while writing pgData' , err)
+    } else {
+      console.log('the products file is successfully created');
+    }
+  });
 }
 
 const seedReviews = (productQuantity) => {
+  const filePath = path.join(__dirname, '../data/pgReviews');
+  let fileContent = '';
+  let fileIndex = 1;
+  let index = 0;
+  let reviewIndex = 0;
+  let userId = 1;
+  const randomReviews = [5, 10, 6, 8, 7, 3, 15, 16, 19, 20, 2, 9, 14, 12, 11, 14, 12, 15, 7, 8];
+  const randomRatings = [1, 5, 4, 3, 2, 5, 3, 1, 2, 3, 4, 5, 3, 2, 1, 1, 3, 5, 4, 5];
+  const randomExp = [5, 3, 4, 5, 1, 2, 3, 2, 1, 4, 5, 2, 3, 3, 3, 3, 2, 5, 4, 1];
+  const randomDiff = [5, 4, 1, 5, 2, 3, 5, 4, 5, 4, 5, 4, 1, 2, 3, 5, 4, 1, 2, 3];
+  const randomValue = [5, 5, 5, 4, 4, 4, 1, 5, 4, 1, 4, 5, 3, 2, 5, 4, 1, 2, 3, 5];
+  const randomBuildTimes = [10, 20, 15, 8, 9, 40, 70, 100, 30, 40, 60, 80, 13, 14, 63, 54, 67, 23, 4, 5];
   for (let i = 1; i <= productQuantity; i += 1) {
-    const numberOfReviews = Math.floor(Math.random() * 20 + 1);
-    for (let j = 1; j <= numberOfReviews; j += 1) {
-      const userId = Math.floor(Math.random() * 100 + 1);
+    for (let j = 1; j <= randomReviews[reviewIndex]; j += 1) {
       const createdAt = faker.date.between('2020-01-01', '2020-05-05').toString().replace(/G.+/g, 'PST');
-      const comment = faker.lorem.paragraph();
-      const rating = Math.floor(Math.random() * 5 + 1);
+      const subject = faker.lorem.words();
+      const comment = faker.lorem.sentence();
+      const rating = randomRatings[index];
       const recommended = faker.random.boolean();
       const isHelpful = faker.random.number();
       const isNotHelpful = faker.random.number();
-      const playExperience = Math.floor(Math.random() * 5 + 1);
-      const difficulty = Math.floor(Math.random() * 5 + 1);;
-      const valueForMoney = Math.floor(Math.random() * 5 + 1);
-      const buildTime = Math.floor(Math.random() * 100 + 1);
+      const playExperience = randomExp[index];
+      const difficulty = randomDiff[index];
+      const valueForMoney = randomValue[index];
+      const buildTime = randomBuildTimes[index];
 
-      fileContent += `INSERT INTO reviews (user_id, product_id, created_at, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) values (${userId}, ${i}, '${createdAt}', '${comment}', ${rating}, ${recommended}, ${isHelpful}, ${isNotHelpful}, ${playExperience}, ${difficulty}, ${valueForMoney}, ${buildTime}); \n`;
+      fileContent += `${userId}, ${i}, '${createdAt}', '${subject}', '${comment}', ${rating}, ${recommended}, ${isHelpful}, ${isNotHelpful}, ${playExperience}, ${difficulty}, ${valueForMoney},${buildTime}\n`;
+
+      //increment or reset index
+      (index === 19) ? index = 0 : index += 1;
+      (userId === 100) ? userId = 1 : userId += 1;
+    }
+    (reviewIndex === 19) ? reviewIndex = 0 : reviewIndex += 1;
+
+    if ((i+1) % 300000 === 0) {
+      // if (fileIndex === 0 ) {
+        fs.writeFile(`${filePath}${fileIndex}.txt`, fileContent, (err) => {
+          if (err) {
+            console.log('error while writing pgData' , err)
+          } else {
+            console.log(`the Reviews file is successfully created`);
+          }
+        })
+        fileIndex += 1;
+        fileContent = null;
+    //   } else {
+    //     fs.appendFile(filePath, fileContent, (err) => {
+    //       if (err) {
+    //         console.log('error while writing pgData' , err)
+    //       } else {
+    //         console.log('the Reviews file is successfully updated');
+    //       }
+    //     });
+    //     fileContent = '';
+    //   }
     }
   }
+  fs.writeFile(`${filePath}${fileIndex}.txt`, fileContent, (err) => {
+    if (err) {
+      console.log('error while writing pgData' , err)
+    } else {
+      console.log(`the Reviews file is successfully created`);
+    }
+  })
 }
 
 seedUsers();
-seedProducts(1000000);
-seedReviews(1000000);
-
-const filePath = path.join(__dirname, '../pgData.txt');
-fs.writeFile(filePath, fileContent, (err) => {
-  if (err) {
-    console.log('error while writing pgData' , err)
-  } else {
-    console.log('the file is successfully created');
-  }
-});
-
+seedProducts(2000000);
+seedReviews(2000000);
