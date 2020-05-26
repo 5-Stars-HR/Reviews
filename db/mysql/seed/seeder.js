@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable max-len */
-const data = require('../legos_data.js');
+const data = require('../data/legos_data.js');
 const helpers = require('./helpers.js');
 const db = require('../index.js');
 
