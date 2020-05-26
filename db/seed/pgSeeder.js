@@ -80,6 +80,7 @@ const seedReviews = (productQuantity) => {
           console.log('error while writing pgData' , err)
         } else {
           console.log(`the Reviews file is successfully created`);
+          writeStream.end();
         }
       })
       fileIndex += 1;
@@ -92,6 +93,7 @@ const seedReviews = (productQuantity) => {
       console.log('error while writing pgData' , err)
     } else {
       console.log(`the Reviews file is successfully created`);
+      writeStream.end();
     }
   })
 }
