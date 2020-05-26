@@ -10,7 +10,7 @@ const seedUsers = () => {
     const firstName = faker.name.firstName().replace(/'/, ' ');
     const lastName = faker.name.lastName().replace(/'/, ' ');
     const username = faker.internet.userName();
-    fileContent += `'${firstName}', '${lastName}', '${username}', ${randomAge[index]}\n`;
+    fileContent += `${firstName}, ${lastName}, ${username}, ${randomAge[index]}\n`;
     (index === 19) ? index = 0 : index += 1;
   }
   fs.writeFile(path.join(__dirname, '../data/pgUsers.txt'), fileContent, (err) => {
@@ -22,26 +22,25 @@ const seedUsers = () => {
   });
 };
 
-const seedProducts = (quantity) =>  {
+const seedProducts = (quantity) => {
   let fileContent = '';
   for (let i = 1; i <= quantity; i += 1) {
     const productName = faker.commerce.productName();
-    fileContent += `'${productName}'\n`;
+    fileContent += `${productName}\n`;
   }
   fs.writeFile(path.join(__dirname, '../data/pgProducts.txt'), fileContent, (err) => {
     if (err) {
-      console.log('error while writing pgData' , err)
+      console.log('error while writing pgData', err);
     } else {
       console.log('the products file is successfully created');
     }
   });
-}
+};
 
 const seedReviews = (productQuantity) => {
   const filePath = path.join(__dirname, '../data/pgReviews.txt');
-  let writeStream = fs.createWriteStream(filePath, { flags : 'w+'});
+  const writeStream = fs.createWriteStream(filePath, { flags: 'w+' });
   let fileContent = '';
-  let fileIndex = 1;
   let index = 0;
   let reviewIndex = 0;
   let userId = 1;
@@ -65,13 +64,13 @@ const seedReviews = (productQuantity) => {
       const valueForMoney = randomValue[index];
       const buildTime = randomBuildTimes[index];
 
-      fileContent += `${userId}, ${i}, '${createdAt}', '${subject}', '${comment}', ${rating}, ${recommended}, ${isHelpful}, ${isNotHelpful}, ${playExperience}, ${difficulty}, ${valueForMoney},${buildTime}\n`;
-      //increment or reset index
+      fileContent += `${userId}, ${i}, '${createdAt}', ${subject}, ${comment}, ${rating}, ${recommended}, ${isHelpful}, ${isNotHelpful}, ${playExperience}, ${difficulty}, ${valueForMoney},${buildTime}\n`;
+      // increment or reset index
       (index === 19) ? index = 0 : index += 1;
       (userId === 100) ? userId = 1 : userId += 1;
     }
     (reviewIndex === 19) ? reviewIndex = 0 : reviewIndex += 1;
-    //reset filecontent ecery 300k entries due to string max-length of V8
+    // reset filecontent ecery 300k entries due to string max-length of V8
     if ((i+1) % 300000 === 0) {
       writeStream.write(fileContent, (err) => {
         if (err) {
@@ -80,11 +79,10 @@ const seedReviews = (productQuantity) => {
           console.log(`the Reviews file is successfully created`);
         }
       })
-      fileIndex += 1;
       fileContent = '';
     }
   }
-  //write the remaining entries
+  // write the remaining entries
   writeStream.write(fileContent, (err) => {
     if (err) {
       console.log('error while writing pgData' , err)
@@ -93,7 +91,7 @@ const seedReviews = (productQuantity) => {
       writeStream.end();
     }
   })
-}
+};
 
 seedUsers();
 seedProducts(10000000);

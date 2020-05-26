@@ -9,7 +9,7 @@
   },
   "scripts": {
     "reset_db": "mysql -h 54.193.74.145 -uroot < ./db/lego_schema.sql",
-    "reset_pg": "psql -U postgres < ./db/postgresql_schema.sql",
+    "reset_pg": "psql -U postgres < ./db/postgresql/postgresql_schema.sql",
     "seed_db": "node ./db/seed/seeder.js",
     "nodemon": "nodemon ./server/index.js",
     "start": "webpack --config webpack.prod.js && node ./server/index.js",
@@ -31,6 +31,7 @@
     "jest-fetch-mock": "^3.0.3",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
+    "pg": "^8.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.0",
