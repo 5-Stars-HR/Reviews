@@ -27,7 +27,7 @@ const ReviewExperience = ({experiences}) => (
     </Spacer>
     <Spacer bm={1.125}>
       <span className="review-experience__build-time">
-        <span>Build Time: 8 hrs</span>
+        <span>Build Time: {experiences.buildTime} Hrs</span>
       </span>
     </Spacer>
     <Spacer bm={1.125}>

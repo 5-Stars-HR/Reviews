@@ -24,28 +24,58 @@ const getReviewsForProduct = (req, res) => {
       const result = helpers.getReviewsData(data.rows);
       res.status(200).send(result);
     }
-  })
+  });
 };
 
-// const getReviewsForProduct = function (productId) {
-//   return new Promise((resolve, reject) => {
-//     const queryString = `
-//     SELECT prod.name AS product_name, prod.id AS product_id, rev.id, rev.created_at, rev.rating, rev.recommended, rev.subject, rev.description, rev.is_helpful, rev.is_not_helpful, exp.play_experience, exp.difficulty, exp.value, exp.build_time, users.name, users.age FROM products AS prod
-//     JOIN reviews AS rev ON rev.product_id=prod.id
-//     JOIN experiences AS exp ON exp.id=rev.experience_id
-//     JOIN users ON users.id=rev.user_id
-//     WHERE prod.id=${productId}`;
+const updateReviewForProduct = (req, res) => {
+  const {feedback, action} = req.body;
+  const reviewId = req.params.review_id;
+  console.log(feedback, action, reviewId);
+  const sql = `UPDATE reviews SET ${feedback} = ${feedback} ${action} 1 WHERE id = ${reviewId}`
+  pgdb.client.query(sql, (err, data) => {
+    if (err) {
+      console.log('Error from update PSQL DB reviews\'s vote counts:', err);
+      res.status(500);
+    } else {
+      res.status(201).send(data);
+    }
+  });
+};
 
-//     db.connection.query(queryString, (err, data) => {
-//       if (err) {
-//         console.error(err);
-//         return reject(err);
-//       }
-//       const product = helpers.getReviewsData(data);
-//       resolve(product);
-//     });
-//   });
-// };
+const getReview = (req, res) => {
+  const reviewId = req.params.review_id;
+  console.log(reviewId);
+  const sql = `SELECT reviews.id, reviews.is_helpful, reviews.is_not_helpful FROM reviews WHERE id = ${reviewId}`;
+  pgdb.client.query(sql, (err, data) => {
+    if (err) {
+      console.log('Error from getting review vote counts :', err);
+    } else {
+      res.status(200).send(data.rows);
+    }
+  });
+};
+
+/* MYSQL database query
+---------------------------
+const getReviewsForProduct = function (productId) {
+  return new Promise((resolve, reject) => {
+    const queryString = `
+    SELECT prod.name AS product_name, prod.id AS product_id, rev.id, rev.created_at, rev.rating, rev.recommended, rev.subject, rev.description, rev.is_helpful, rev.is_not_helpful, exp.play_experience, exp.difficulty, exp.value, exp.build_time, users.name, users.age FROM products AS prod
+    JOIN reviews AS rev ON rev.product_id=prod.id
+    JOIN experiences AS exp ON exp.id=rev.experience_id
+    JOIN users ON users.id=rev.user_id
+    WHERE prod.id=${productId}`;
+
+    db.connection.query(queryString, (err, data) => {
+      if (err) {
+        console.error(err);
+        return reject(err);
+      }
+      const product = helpers.getReviewsData(data);
+      resolve(product);
+    });
+  });
+};
 
 const updateReviewForProduct = function (productId, reviewId, data) {
   return new Promise((resolve, reject) => {
@@ -75,6 +105,8 @@ const getReview = function (productId, reviewId) {
     });
   });
 };
+---------------------------
+*/
 
 module.exports = {
   getReviewsForProduct, updateReviewForProduct, getReview

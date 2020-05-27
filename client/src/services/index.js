@@ -15,9 +15,9 @@ const getReviews = (productId) => {
     resolve(res.json());
   });
 };
-  
+
 const getReview = async (reviewId, productId) => {
-  const apiUrl = `/api/products/${productId}/reviews/${reviewId}`;
+  const apiUrl = `/api/products/${productId}/reviews/${reviewId}/votes`;
 
   const res = await fetch(apiUrl, {
     method: 'GET',
@@ -34,7 +34,7 @@ const sendVote = async(reviewId, productId, data) => {
   const apiUrl = `/api/products/${productId}/reviews/${reviewId}`;
 
   const res = await fetch(apiUrl, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       Accept: 'application/json',
       'Content-type': 'application/json',
