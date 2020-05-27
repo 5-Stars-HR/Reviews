@@ -16,7 +16,7 @@ class ReviewsOverview extends Component {
   }
 
   async componentDidMount() {
-    Services.getReviews(18)
+    Services.getReviews(1)
       .then(res => {
         this.setState({
           reviews: res.reviews,

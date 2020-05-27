@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import styled from 'styled-components';
 import services from '../../services';
 import ReviewInfos from './ReviewInfos';
@@ -23,6 +24,7 @@ class ReviewsListItem extends Component {
   }
 
   async submitVote (feedback) {
+    console.log(feedback);
     const { review, productId} = this.props;
     const { hasVoted } = this.state;
 
@@ -35,13 +37,14 @@ class ReviewsListItem extends Component {
     try {
       await services.sendVote(review.id, productId, data);
       const res = await services.getReview(review.id, productId);
+      console.log(res);
 
       const activeButton = feedback === 'is_helpful' ? 'helpfulIsActive' : 'unhelpfulIsActive';
 
       this.setState((prevState) => ({
         hasVoted: !prevState.hasVoted,
-        helpfulCount: res.is_helpful,
-        unhelpfulCount: res.is_not_helpful,
+        helpfulCount: res[0].is_helpful,
+        unhelpfulCount: res[0].is_not_helpful,
         [activeButton]: !prevState[activeButton]
       }));
     } catch (err) {
@@ -60,7 +63,7 @@ class ReviewsListItem extends Component {
     return (
       <ReviewsContainer>
         <Spacer bm={1} data-test="date">
-          {review.createdAt}
+          {moment(review.createdAt).format("MMM Do YYYY")}
         </Spacer>
         <Spacer bm={1}>
           <Ratings rating={review.rating.toFixed(1)} marker={MARKERS.STAR}/>
