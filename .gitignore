@@ -1,3 +1,9 @@
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
 node_modules/
 db/postgresql/data/
-
+db/mongo/data/

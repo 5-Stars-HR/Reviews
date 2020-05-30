@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const pgReviews = require('../controllers/pgReviews.js');
 const pgdb = require('../db/postgresql/index.js');
-const mongoDb = require('../db/mongo/index.js');
+// const { Users, Products, mongoDb }  = require('../db/mongo/index.js');
 
 const app = express();
 

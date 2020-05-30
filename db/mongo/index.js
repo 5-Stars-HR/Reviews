@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
 
+/* Comment this in to use mongoDb
 mongoose.connect('mongodb://localhost/reviewsDb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
- });
+});
 
 const mongoDb = mongoose.connection;
+
 mongoDb.on('error', console.error.bind(console, 'connection error:'));
 mongoDb.once('open', () => {
   console.log(' Connected to mongoDB')
   console.log(`--------------------`)
 });
+
+*/
 
 const userSchema = new mongoose.Schema({
   first_name: String,
@@ -21,9 +25,9 @@ const userSchema = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema({
   product_name: String,
+  id: Number,
   reviews: [
     {
-      _id: false,
       id: Number,
       user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -47,8 +51,5 @@ const productSchema = new mongoose.Schema({
 const Users= mongoose.model('Users', userSchema);
 const Products = mongoose.model('Products', productSchema);
 
-module.exports = { mongoDb, Users, Products }
-
-
-
-
+// Comment this in to use mongo Db
+// module.exports = { mongoDb, Users, Products }
