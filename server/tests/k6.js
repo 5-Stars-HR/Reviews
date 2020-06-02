@@ -2,14 +2,14 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export let options = {
-  stages: [
-    { duration: '2m', target: 75 },
-    { duration: '2m', target: 90 },
-    { duration: '2m', target: 110 },
-    { duration: '2m', target: 130 },
-  ],
-  // vus: 600,
-  // duration: '2m',
+  // stages: [
+  //   { duration: '2m', target: 75 },
+  //   { duration: '2m', target: 90 },
+  //   { duration: '2m', target: 110 },
+  //   { duration: '2m', target: 130 },
+  // ],
+  vus: 10,
+  duration: '1m',
 };
 
 export default function() {
@@ -20,6 +20,6 @@ export default function() {
     "Error Rate": (r) => r.status !== 200,
     "Transaction time < 2000ms: ": (result) => result.timings.duration < 2000,
     })
-    sleep(0.1);
+    sleep(1);
 };
 
