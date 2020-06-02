@@ -9,7 +9,7 @@
   },
   "scripts": {
     "reset_sql": "mysql -h 54.193.74.145 -uroot < ./db/lego_schema.sql",
-    "reset_pg": "psql -U postgres < ./db/postgresql/postgresql_schema.sql",
+    "reset_pg": "psql -U postgres < ./db/postgresql/schema.sql",
     "reset_mongo": "node --max-old-space-size=16384 ./db/mongo/seed/generateAndSeed.js",
     "generate_mongo": "node --max-old-space-size=16384 ./db/mongo/seed/generator.js",
     "generate_pg": "node --max-old-space-size=16384 ./db/postgresql/seed/generator.js",

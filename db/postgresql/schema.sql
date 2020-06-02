@@ -33,7 +33,6 @@
     build_time SMALLINT NOT NULL
   );
 
-
 COPY users(first_name, last_name, username, age) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/postgresql/data/pgUsers.txt' WITH DELIMITER ',';
 COPY products(product_name) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/postgresql/data/pgProducts.txt';
 COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommended, is_helpful, is_not_helpful, play_experience, difficulty, value_for_money, build_time) FROM '/Users/whisly/Documents/HR/SDC/Reviews/db/postgresql/data/pgReviews.txt' WITH DELIMITER ',';
@@ -44,3 +43,4 @@ CREATE INDEX ON reviews (product_id);
 CREATE INDEX ON products (product_name);
 CREATE INDEX query_index ON reviews (product_id, user_id, created_at);
 CREATE INDEX ON users (first_name, age)
+
