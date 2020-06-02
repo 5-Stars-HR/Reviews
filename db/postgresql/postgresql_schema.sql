@@ -41,3 +41,6 @@ COPY reviews(user_id, product_id, created_at, subject, comment, rating, recommen
 ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products(product_id);
 ALTER TABLE reviews ADD FOREIGN KEY (user_id) REFERENCES users(user_id);
 CREATE INDEX ON reviews (product_id);
+CREATE INDEX ON products (product_name);
+CREATE INDEX query_index ON reviews (product_id, user_id, created_at);
+CREATE INDEX ON users (first_name, age)
