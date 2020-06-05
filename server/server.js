@@ -19,7 +19,20 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/products/:product_id/reviews', pgReviews.getReviewsForProduct)
+// app.get('/api/products/:product_id/reviews', pgReviews.getReviewsForProduct)
+
+// refactor GET request using PROMISE function instead of callback
+app.get('/api/products/:product_id/reviews', (req, res) => {
+  const productId = req.params.product_id;
+  pgReviews.getReviewsForProduct(productId)
+    .then( result => res.status(200).send(result))
+    .catch ( err => {
+      console.log('errrrrr', err);
+      res.status(500);
+    });
+});
+
+
 app.patch('/api/products/:product_id/reviews/:review_id', pgReviews.updateReviewForProduct);
 app.get('/api/products/:product_id/reviews/:review_id/votes', pgReviews.getReview);
 app.get('/api/DummyTest', (req, res) => res.status(200).send('Hello World'));

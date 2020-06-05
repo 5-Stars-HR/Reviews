@@ -8,13 +8,13 @@ export let options = {
   //   { duration: '2m', target: 110 },
   //   { duration: '2m', target: 130 },
   // ],
-  vus: 10,
+  vus: 150,
   duration: '1m',
 };
 
 export default function() {
   let productId = Math.floor(Math.random() * 10000000);
-  let res = http.get(`http://localhost:8080/api/products/${productId}/reviews`);
+  let res = http.get(`http://localhost:3000/api/products/${productId}/reviews`);
   check(res, {
     "Status 200: ": (result) => result.status == 200,
     "Error Rate": (r) => r.status !== 200,

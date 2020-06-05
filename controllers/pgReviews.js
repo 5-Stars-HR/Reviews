@@ -1,28 +1,45 @@
 const pgdb = require('../db/postgresql/index.js');
 const helpers = require('./helpers');
 
-const getReviewsForProduct = (req, res) => {
-  const productId = req.params.product_id;
+// const getReviewsForProduct = (req, res) => {
+//   const productId = req.params.product_id;
+//   const sql = `
+//     SELECT
+//       products.product_id, products.product_name, users.age, users.first_name, reviews.id, reviews.created_at,
+//       reviews.comment, reviews.build_time, reviews.difficulty, reviews.play_experience, reviews.value_for_money,
+//       reviews.is_helpful, reviews.is_not_helpful, reviews.rating, reviews.recommended, reviews.subject
+//     FROM
+//       reviews, users, products
+//     WHERE
+//       products.product_id = ${productId} AND reviews.user_id = users.user_id AND reviews.product_id = products.product_id;
+//   `
+//   pgdb.client.query(sql, (err, data) => {
+//     if (err) {
+//       console.log('Error from query PSQL DB: ', err);
+//       res.status(500);
+//     } else {
+//       const result = helpers.getReviewsData(data.rows);
+//       res.status(200).send(result);
+//     }
+//   });
+// };
+
+// refactored using ASYNC and AWAIT
+const getReviewsForProduct = async (productId) => {
   const sql = `
     SELECT
-      products.product_id, products.product_name, users.age, users.first_name, reviews.id, reviews.created_at,
-      reviews.comment, reviews.build_time, reviews.difficulty, reviews.play_experience, reviews.value_for_money,
-      reviews.is_helpful, reviews.is_not_helpful, reviews.rating, reviews.recommended, reviews.subject
+    products.product_id, products.product_name, users.age, users.first_name, reviews.id, reviews.created_at,
+    reviews.comment, reviews.build_time, reviews.difficulty, reviews.play_experience, reviews.value_for_money,
+    reviews.is_helpful, reviews.is_not_helpful, reviews.rating, reviews.recommended, reviews.subject
     FROM
-      reviews, users, products
+    reviews, users, products
     WHERE
-      products.product_id = ${productId} AND reviews.user_id = users.user_id AND reviews.product_id = products.product_id;
-  `
-  pgdb.client.query(sql, (err, data) => {
-    if (err) {
-      console.log('Error from query PSQL DB: ', err);
-      res.status(500);
-    } else {
-      const result = helpers.getReviewsData(data.rows);
-      res.status(200).send(result);
-    }
-  });
-};
+    products.product_id = ${productId} AND reviews.user_id = users.user_id AND reviews.product_id = products.product_id;
+    `
+  const data = await pgdb.client.query(sql);
+  const result = helpers.getReviewsData(data.rows);
+  return result;
+}
 
 const updateReviewForProduct = (req, res) => {
   const {feedback, action} = req.body;
