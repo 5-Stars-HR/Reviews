@@ -22,6 +22,8 @@ app.use((req, res, next) => {
 app.get('/api/products/:product_id/reviews', pgReviews.getReviewsForProduct)
 app.patch('/api/products/:product_id/reviews/:review_id', pgReviews.updateReviewForProduct);
 app.get('/api/products/:product_id/reviews/:review_id/votes', pgReviews.getReview);
+app.get('/api/DummyTest', (req, res) => res.status(200).send('Hello World'));
+
 
 /*  MySQL database APIs
 ------------------------------------

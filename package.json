@@ -15,6 +15,7 @@
     "generate_pg": "node --max-old-space-size=16384 ./db/postgresql/seed/generator.js",
     "nodemon": "nodemon ./server/index.js",
     "start": "webpack --config webpack.prod.js && node ./server/index.js",
+    "start_EC2": "node --max-old-space-size=1024 ./server/index.js",
     "server": "concurrently -k \"npm run nodemon\" \"npx webpack -w --config webpack.dev.js\"",
     "docker_me": "sleep 10 && \"npm start\"",
     "circleci": "webpack && npm run seed_db",
